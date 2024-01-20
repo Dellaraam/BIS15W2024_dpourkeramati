@@ -162,7 +162,7 @@ dim(mammals)
 
 3. Check the column names in the data frame. 
 ```{r}
-ncol(mammals)
+?ncol(mammals)
 ```
 
 4. Use `str()` to show the structure of the data frame and its individual columns; compare this to `glimpse()`. 
