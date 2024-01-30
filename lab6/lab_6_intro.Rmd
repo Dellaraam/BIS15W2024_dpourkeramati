@@ -26,9 +26,53 @@ library("jpeg")
 3. When is your first midterm?  
 
 ## Warm-up
+```{r}
+library("tidyverse")
+library("janitor")
+```
+
 1. Load the `bison.csv` data.
+```{r}
+bison <- readr::read_csv("data/bison.csv")
+```
+
 2. What are the dimesions and structure of the data?
+```{r}
+dim(bison)
+```
+```{r}
+str(bison)
+```
+
 3. We are only interested in code, sex, weight, year of birth. Restrict the data to these variables and store the dataframe as a new object.
+```{r}
+data <- bison %>%
+  select(data_code,animal_sex,animal_weight,animal_yob)
+```
+
 4. Pull out the animals born between 1980-1990.
+```{r}
+data %>%
+  filter(between(animal_yob,1980,1990))
+```
+  
 5. How many male and female bison are represented between 1980-1990?
+```{r}
+females <- data %>% 
+   filter(between(animal_yob,1980,1990)) %>%
+   filter(animal_sex=="F")
+count(females)
+```
+```{r}
+males <- data %>% 
+   filter(between(animal_yob,1980,1990)) %>%
+   filter(animal_sex=="M")
+count(males)
+```
+
 6. Between 1980-1990, were males or females larger on average?
+```{r}
+mean(males$animal_weight)
+mean(females$animal_weight)
+```
+

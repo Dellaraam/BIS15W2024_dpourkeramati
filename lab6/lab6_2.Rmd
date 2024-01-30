@@ -27,22 +27,34 @@ These are data taken from comic books and assembled by fans. The include a good 
 
 Check out the way I am loading these data. If I know there are NAs, I can take care of them at the beginning. But, we should do this very cautiously. At times it is better to keep the original columns and data intact.  
 ```{r}
-#superhero_info <- read_csv("data/heroes_information.csv", na = c("", "-99", "-"))
-#superhero_powers <- read_csv("data/super_hero_powers.csv", na = c("", "-99", "-"))
+superhero_info <- read_csv("data/heroes_information.csv", na = c("", "-99", "-"))
+superhero_powers <- read_csv("data/super_hero_powers.csv", na = c("", "-99", "-"))
 ```
 
 ## Data tidy
 1. Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`.    
+```{r}
+superh <- clean_names(superhero_info)
+superp <- clean_names(superhero_powers)
+```
 
 ## `tabyl`
 The `janitor` package has many awesome functions that we will explore. Here is its version of `table` which not only produces counts but also percentages. Very handy! Let's use it to explore the proportion of good guys and bad guys in the `superhero_info` data.  
 ```{r}
-#tabyl(superhero_info, alignment)
+tabyl(superh, alignment)
 ```
 
 1. Who are the publishers of the superheros? Show the proportion of superheros from each publisher. Which publisher has the highest number of superheros?  
+```{r}
+tabyl(superh,publisher)
+  
+```
 
 2. Notice that we have some neutral superheros! Who are they? List their names below.  
+```{r}
+superh %>%
+  select(names,alignment)
+```
 
 ## `superhero_info`
 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
