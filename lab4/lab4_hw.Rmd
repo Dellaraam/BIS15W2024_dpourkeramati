@@ -20,6 +20,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 ## Load the tidyverse
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
+library(janitor)
 ```
 
 ## Data
@@ -31,7 +32,7 @@ Data: http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1
 
 **1. Load the data into a new object called `homerange`.**
 ```{r}
-getwd
+getwd()
 ```
 
 ```{r}
@@ -87,6 +88,7 @@ carni
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
 ```{r}
+anyNA(herbi$mean.hra.m2)
 hmean <- mean(herbi$mean.hra.m2)
 hmean
 ```
@@ -98,14 +100,22 @@ cmean
 
 **9. Make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below** 
 ```{r}
-owls <- select(homerange, "mean.mass.g", "log10.mass", "family", "genus", "species")
-owls2 <- filter(owls, order %in% c("strigiformes"))
+homerange %>%
+  select(mean.mass.g, log10.mass, family, genus, species, order, common.name) %>%  
+  filter(order=="strigiformes") %>%
+  arrange(mean.mass.g)
+
 ```
+
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
 ```{r}
-
+homerange %>%
+  select(mean.hra.m2, species, taxon) %>%
+  filter(taxon=='birds') %>%
+  arrange(mean.hra.m2)
+  
 ```
-
+Cheriway is found in Central and South America. It mainly feeds on the bodies of dead animals. 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
