@@ -119,12 +119,20 @@ low_w
 
 11. Let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.
 ```{r}
-
-height_weight_ratio = height/weight
+superh %>%
+  select(name,height,weight) %>%
+  mutate(height_weight_ratio = height/weight)
 ```
 
 
-12. Who has the highest height to weight ratio?  
+12. Who has the highest height to weight ratio? 
+```{r}
+superh %>%
+  select(name,height,weight) %>%
+  mutate(height_weight_ratio = height/weight) %>%
+  arrange(desc(height_weight_ratio))
+```
+
 
 ## `superhero_powers`
 Have a quick look at the `superhero_powers` data frame.  
