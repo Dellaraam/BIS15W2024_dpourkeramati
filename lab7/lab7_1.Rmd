@@ -193,9 +193,6 @@ msleep %>%
   select(order, genus, brainwt) %>%
   summarize(mean_brainwt=mean(brainwt,na.rm=TRUE))
 ```
-```{r}
-getwd()
-```
 
 ## That's it! Let's take a break and then move on to part 2! 
 
