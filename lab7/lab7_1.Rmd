@@ -123,7 +123,9 @@ msleep %>%
 
 n_distinct() is a very handy way of cleanly presenting the number of distinct observations. Here we show the number of distinct genera over 100 in body weight.
 ```{r}
-
+msleep %>%
+  filter(bodywt>100) %>%
+  summarize(distinct=n_distinct(genus))
 ```
 
 There are many other useful summary statistics, depending on your needs: sd(), min(), max(), median(), sum(), n() (returns the length of a column), first() (returns first value in a column), last() (returns last value in a column) and n_distinct() (number of distinct values in a column).
