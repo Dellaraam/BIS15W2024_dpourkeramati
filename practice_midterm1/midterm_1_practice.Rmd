@@ -49,12 +49,12 @@ glimpse(elephants)
 
 
 4. (2 points) Change the names of the variables to lower case and change the class of the variable `sex` to a factor.
-```{r}
-elephants$sex <- as.factor(elephants$sex)
-```
 
 ```{r}
 elephants <- clean_names(elephants)
+```
+```{r}
+elephants$sex <- as.factor(elephants$sex)
 ```
 
 
@@ -135,6 +135,11 @@ names(cats)
 ```{r}
 cats %>%
   filter(Distance<3) %>%
+  summarize(across(contains("RA_"),mean))
+```
+```{r}
+cats %>%
+  filter(Distance>=25) %>%
   summarize(across(contains("RA_"),mean))
 ```
 
