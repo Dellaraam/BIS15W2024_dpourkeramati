@@ -81,7 +81,6 @@ Problem 7. (3 points) Among the Yellowstone wolf packs, the [Druid Peak Pack](ht
 ```{r}
 ynp %>%
   filter(pack=="druid") %>%
-  group_by(biolyr) %>%
   summarize(ave_pack_size=mean(packsize_aug))
 ```
 
