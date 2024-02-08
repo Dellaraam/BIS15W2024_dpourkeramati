@@ -27,3 +27,7 @@ library("jpeg")
 
 ### Warm-up
 1. Please install the package `naniar`.
+```{r}
+install.packages("naniar")
+```
+
