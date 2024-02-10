@@ -66,13 +66,15 @@ miss_var_summary(amniota)
 
 **5. Make any necessary replacements in the data such that all NA's appear as "NA".**   
 ```{r}
-amniota <- readr::read_csv("data/amniota.csv", na = c("-999","-999.0000","-999.00","-999.000","-999.0"," ",".","NA")) %>% clean_names
+amniota %>% 
+  replace_with_na_all(condition = ~.x %in% c(common_na_strings, common_na_numbers)) 
 ```
 
 **6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.**  
 ```{r}
 miss_var_summary(amniota)
 ```
+
 
 **7. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amphibio` data.**
 ```{r}
@@ -90,7 +92,9 @@ These make no sense at all and the data basically useless
 
 **9. The `amphibio` data have variables that classify species as fossorial (burrowing), terrestrial, aquatic, or arboreal.Calculate the number of NA's in each of these variables. Do you think that the authors intend us to think that there are NA's in these columns or could they represent something else? Explain.**
 ```{r}
-
+amphibio %>%
+  select(ter,aqu,arb) %>%
+  miss_var_summary()
 ```
 
 **10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?**
