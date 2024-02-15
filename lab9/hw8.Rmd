@@ -93,7 +93,7 @@ dates
 ```{r}
 dates %>% 
   select(year,site,enterococci_cfu_100ml) %>%
-  pivot_wider(names_from = year, values_from = enterococci_cfu_100ml)
+  pivot_longer(-year, names_to = "site", values_to = "enterococci_cfu_100ml")
 
   
 ```
