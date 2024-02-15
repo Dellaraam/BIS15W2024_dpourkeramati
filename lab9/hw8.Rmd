@@ -69,9 +69,6 @@ sydneybeaches_long
 
 4. Pivot the data such that the dates are column names and each beach only appears once (wide format). Name the object `sydneybeaches_wide`
 ```{r}
-#sydneybeaches_wide <- sydneybeaches_long %>%
-#   pivot_wider(names_from = site)
-
 sydneybeaches_wide <- sydneybeaches_long %>% 
   pivot_wider(names_from = date, 
               values_from = enterococci_cfu_100ml)
@@ -80,10 +77,23 @@ sydneybeaches_wide
 ```
 
 5. Pivot the data back so that the dates are data and not column names.
+```{r}
+sydneybeaches_wide %>%
+  pivot_longer(-date, names_to = "site", values_to = "enterococci_cfu_100ml")
+```
 
 6. We haven't dealt much with dates yet, but separate the date into columns day, month, and year. Do this on the `sydneybeaches_long` data.
+```{r}
+sydneybeaches_long %>%
+  separate(date, into = c("day","month", "year"))
+```
 
 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.
+```{r}
+sydneybeaches_long %>%
+  group_by(site) %>%
+  mean(enterococci_cfu_100ml)
+```
 
 8. Make the output from question 7 easier to read by pivoting it to wide format.
 
