@@ -91,16 +91,27 @@ dates
 
 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.
 ```{r}
-dates %>% 
+means <- dates %>% 
   select(year,site,enterococci_cfu_100ml) %>%
-  pivot_longer(-year, names_to = "site", values_to = "enterococci_cfu_100ml")
+  group_by(site,year) %>%
+  summarise(mean_cfu = mean(enterococci_cfu_100ml, na.rm=TRUE))
 
-  
+means  
 ```
 
 8. Make the output from question 7 easier to read by pivoting it to wide format.
+```{r}
+means %>% 
+  pivot_wider(names_from = site, values_from = mean_cfu)
+```
 
 9. What was the most polluted beach in 2013?
+```{r}
+dates %>%
+  filter(year==2013) %>%
+  arrange(desc(enterococci_cfu_100ml))
+```
+little bay beach
 
 10. Please complete the class project survey at: [BIS 15L Group Project](https://forms.gle/H2j69Z3ZtbLH3efW6)
 
