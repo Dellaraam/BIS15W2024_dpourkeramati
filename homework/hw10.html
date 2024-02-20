@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name Here" />
+<meta name="author" content="Please Add Your Name Here" />
 
 <meta name="date" content="2024-02-19" />
 
-<title>Homework 7</title>
+<title>Homework 10</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -374,8 +374,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Homework 7</h1>
-<h4 class="author">Your Name Here</h4>
+<h1 class="title toc-ignore">Homework 10</h1>
+<h4 class="author">Please Add Your Name Here</h4>
 <h4 class="date">2024-02-19</h4>
 
 </div>
@@ -388,7 +388,9 @@ RMarkdown. Please embed all of your code and push your final work to
 your repository. Your final lab report should be organized, clean, and
 run free from errors. Remember, you must remove the <code>#</code> for
 the included code chunks to run. Be sure to add your name to the author
-header above.</p>
+header above. For any included plots, make sure they are clearly
+labeled. You are free to use any plot type that you feel best
+communicates the results of your analysis.</p>
 <p>Make sure to use the formatting conventions of RMarkdown to make your
 report neat and clean!</p>
 </div>
@@ -396,55 +398,55 @@ report neat and clean!</p>
 <h2>Load the libraries</h2>
 <pre class="r"><code>library(tidyverse)
 library(janitor)
-library(skimr)
 library(naniar)</code></pre>
 </div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p><strong>1. For this homework, we will use two different data sets.
-Please load <code>amniota</code> and <code>amphibio</code>.</strong></p>
-<p><code>amniota</code> data:<br />
-Myhrvold N, Baldridge E, Chan B, Sivam D, Freeman DL, Ernest SKM (2015).
-“An amniote life-history database to perform comparative analyses with
-birds, mammals, and reptiles.” <em>Ecology</em>, <em>96</em>, 3109. doi:
-10.1890/15-0846.1 (URL: <a href="https://doi.org/10.1890/15-0846.1" class="uri">https://doi.org/10.1890/15-0846.1</a>).</p>
-<p><code>amphibio</code> data:<br />
-Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017).
-“AmphiBIO, a global database for amphibian ecological traits.”
-<em>Scientific Data</em>, <em>4</em>, 170123. doi:
-10.1038/sdata.2017.123 (URL: <a href="https://doi.org/10.1038/sdata.2017.123" class="uri">https://doi.org/10.1038/sdata.2017.123</a>).</p>
-</div>
-<div id="questions" class="section level2">
-<h2>Questions</h2>
-<p><strong>2. Do some exploratory analysis of the <code>amniota</code>
-data set. Use the function(s) of your choice. Try to get an idea of how
-NA’s are represented in the data.</strong></p>
-<p><strong>3. Do some exploratory analysis of the <code>amphibio</code>
-data set. Use the function(s) of your choice. Try to get an idea of how
-NA’s are represented in the data.</strong></p>
-<p><strong>4. How many total NA’s are in each data set? Do these values
-make sense? Are NA’s represented by values?</strong></p>
-<p><strong>5. Make any necessary replacements in the data such that all
-NA’s appear as “NA”.</strong></p>
-<p><strong>6. Use the package <code>naniar</code> to produce a summary,
-including percentages, of missing data in each column for the
-<code>amniota</code> data.</strong></p>
-<p><strong>7. Use the package <code>naniar</code> to produce a summary,
-including percentages, of missing data in each column for the
-<code>amphibio</code> data.</strong></p>
-<p><strong>8. For the <code>amniota</code> data, calculate the number of
-NAs in the <code>egg_mass_g</code> column sorted by taxonomic class;
-i.e. how many NA’s are present in the <code>egg_mass_g</code> column in
-birds, mammals, and reptiles? Does this results make sense biologically?
-How do these results affect your interpretation of NA’s?</strong></p>
-<p><strong>9. The <code>amphibio</code> data have variables that
-classify species as fossorial (burrowing), terrestrial, aquatic, or
-arboreal.Calculate the number of NA’s in each of these variables. Do you
-think that the authors intend us to think that there are NA’s in these
-columns or could they represent something else? Explain.</strong></p>
-<p><strong>10. Now that we know how NA’s are represented in the
-<code>amniota</code> data, how would you load the data such that the
-values which represent NA’s are automatically converted?</strong></p>
+<div id="desert-ecology" class="section level2">
+<h2>Desert Ecology</h2>
+<p>For this assignment, we are going to use a modified data set on <a href="http://esapubs.org/archive/ecol/E090/118/">desert ecology</a>. The
+data are from: S. K. Morgan Ernest, Thomas J. Valone, and James H.
+Brown. 2009. Long-term monitoring and experimental manipulation of a
+Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology
+90:1708.</p>
+<pre class="r"><code>deserts &lt;- read_csv(&quot;data/surveys_complete.csv&quot;) %&gt;% clean_names()</code></pre>
+<pre><code>## Rows: 34786 Columns: 13
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (6): species_id, sex, genus, species, taxa, plot_type
+## dbl (7): record_id, month, day, year, plot_id, hindfoot_length, weight
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Use the function(s) of your choice to get an idea of its
+structure, including how NA’s are treated. Are the data tidy?</p></li>
+<li><p>How many genera and species are represented in the data? What are
+the total number of observations? Which species is most/ least
+frequently sampled in the study?</p></li>
+<li><p>What is the proportion of taxa included in this study? Show a
+table and plot that reflects this count.</p></li>
+<li><p>For the taxa included in the study, use the fill option to show
+the proportion of individuals sampled by
+<code>plot_type.</code></p></li>
+<li><p>What is the range of weight for each species included in the
+study? Remove any observations of weight that are NA so they do not show
+up in the plot.</p></li>
+<li><p>Add another layer to your answer from #5 using
+<code>geom_point</code> to get an idea of how many measurements were
+taken for each species.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Merriam&#39;s_kangaroo_rat">Dipodomys
+merriami</a> is the most frequently sampled animal in the study. How
+have the number of observations of this species changed over the years
+included in the study?</p></li>
+<li><p>What is the relationship between <code>weight</code> and
+<code>hindfoot</code> length? Consider whether or not over plotting is
+an issue.</p></li>
+<li><p>Which two species have, on average, the highest weight? Once you
+have identified them, make a new column that is a ratio of
+<code>weight</code> to <code>hindfoot_length</code>. Make a plot that
+shows the range of this new ratio and fill by sex.</p></li>
+<li><p>Make one plot of your choice! Make sure to include at least two
+of the aesthetics options you have learned.</p></li>
+</ol>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>

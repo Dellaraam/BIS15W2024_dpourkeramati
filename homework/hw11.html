@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name Here" />
+<meta name="author" content="Please Add Your Name Here" />
 
 <meta name="date" content="2024-02-19" />
 
-<title>Homework 7</title>
+<title>Lab 11 Homework</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -374,8 +374,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Homework 7</h1>
-<h4 class="author">Your Name Here</h4>
+<h1 class="title toc-ignore">Lab 11 Homework</h1>
+<h4 class="author">Please Add Your Name Here</h4>
 <h4 class="date">2024-02-19</h4>
 
 </div>
@@ -388,7 +388,11 @@ RMarkdown. Please embed all of your code and push your final work to
 your repository. Your final lab report should be organized, clean, and
 run free from errors. Remember, you must remove the <code>#</code> for
 the included code chunks to run. Be sure to add your name to the author
-header above.</p>
+header above. For any included plots, make sure they are clearly
+labeled. You are free to use any plot type that you feel best
+communicates the results of your analysis.</p>
+<p><strong>In this homework, you should make use of the aesthetics you
+have learned. It’s OK to be flashy!</strong></p>
 <p>Make sure to use the formatting conventions of RMarkdown to make your
 report neat and clean!</p>
 </div>
@@ -396,55 +400,60 @@ report neat and clean!</p>
 <h2>Load the libraries</h2>
 <pre class="r"><code>library(tidyverse)
 library(janitor)
-library(skimr)
+library(here)
 library(naniar)</code></pre>
+<pre class="r"><code>options(scipen = 999)</code></pre>
 </div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p><strong>1. For this homework, we will use two different data sets.
-Please load <code>amniota</code> and <code>amphibio</code>.</strong></p>
-<p><code>amniota</code> data:<br />
-Myhrvold N, Baldridge E, Chan B, Sivam D, Freeman DL, Ernest SKM (2015).
-“An amniote life-history database to perform comparative analyses with
-birds, mammals, and reptiles.” <em>Ecology</em>, <em>96</em>, 3109. doi:
-10.1890/15-0846.1 (URL: <a href="https://doi.org/10.1890/15-0846.1" class="uri">https://doi.org/10.1890/15-0846.1</a>).</p>
-<p><code>amphibio</code> data:<br />
-Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017).
-“AmphiBIO, a global database for amphibian ecological traits.”
-<em>Scientific Data</em>, <em>4</em>, 170123. doi:
-10.1038/sdata.2017.123 (URL: <a href="https://doi.org/10.1038/sdata.2017.123" class="uri">https://doi.org/10.1038/sdata.2017.123</a>).</p>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<p>The idea for this assignment came from <a href="http://www.rebeccabarter.com/blog/2017-11-17-ggplot2_tutorial/">Rebecca
+Barter’s</a> ggplot tutorial so if you get stuck this is a good place to
+have a look.</p>
+</div>
+<div id="gapminder" class="section level2">
+<h2>Gapminder</h2>
+<p>For this assignment, we are going to use the dataset <a href="https://cran.r-project.org/web/packages/gapminder/index.html">gapminder</a>.
+Gapminder includes information about economics, population, and life
+expectancy from countries all over the world. You will need to install
+it before use. This is the same data that we will use for midterm 2 so
+this is good practice.</p>
+<pre class="r"><code>#install.packages(&quot;gapminder&quot;)
+library(&quot;gapminder&quot;)</code></pre>
 </div>
 <div id="questions" class="section level2">
 <h2>Questions</h2>
-<p><strong>2. Do some exploratory analysis of the <code>amniota</code>
-data set. Use the function(s) of your choice. Try to get an idea of how
-NA’s are represented in the data.</strong></p>
-<p><strong>3. Do some exploratory analysis of the <code>amphibio</code>
-data set. Use the function(s) of your choice. Try to get an idea of how
-NA’s are represented in the data.</strong></p>
-<p><strong>4. How many total NA’s are in each data set? Do these values
-make sense? Are NA’s represented by values?</strong></p>
-<p><strong>5. Make any necessary replacements in the data such that all
-NA’s appear as “NA”.</strong></p>
-<p><strong>6. Use the package <code>naniar</code> to produce a summary,
-including percentages, of missing data in each column for the
-<code>amniota</code> data.</strong></p>
-<p><strong>7. Use the package <code>naniar</code> to produce a summary,
-including percentages, of missing data in each column for the
-<code>amphibio</code> data.</strong></p>
-<p><strong>8. For the <code>amniota</code> data, calculate the number of
-NAs in the <code>egg_mass_g</code> column sorted by taxonomic class;
-i.e. how many NA’s are present in the <code>egg_mass_g</code> column in
-birds, mammals, and reptiles? Does this results make sense biologically?
-How do these results affect your interpretation of NA’s?</strong></p>
-<p><strong>9. The <code>amphibio</code> data have variables that
-classify species as fossorial (burrowing), terrestrial, aquatic, or
-arboreal.Calculate the number of NA’s in each of these variables. Do you
-think that the authors intend us to think that there are NA’s in these
-columns or could they represent something else? Explain.</strong></p>
-<p><strong>10. Now that we know how NA’s are represented in the
-<code>amniota</code> data, how would you load the data such that the
-values which represent NA’s are automatically converted?</strong></p>
+<p>The questions below are open-ended and have many possible solutions.
+Your approach should, where appropriate, include numerical summaries and
+visuals. Be creative; assume you are building an analysis that you would
+ultimately present to an audience of stakeholders. Feel free to try out
+different <code>geoms</code> if they more clearly present your
+results.</p>
+<p><strong>1. Use the function(s) of your choice to get an idea of the
+overall structure of the data frame, including its dimensions, column
+names, variable classes, etc. As part of this, determine how NAs are
+treated in the data.</strong></p>
+<p><strong>2. Among the interesting variables in gapminder is life
+expectancy. How has global life expectancy changed between 1952 and
+2007?</strong></p>
+<p><strong>3. How do the distributions of life expectancy compare for
+the years 1952 and 2007?</strong></p>
+<p><strong>4. Your answer above doesn’t tell the whole story since life
+expectancy varies by region. Make a summary that shows the min, mean,
+and max life expectancy by continent for all years represented in the
+data.</strong></p>
+<p><strong>5. How has life expectancy changed between 1952-2007 for each
+continent?</strong></p>
+<p><strong>6. We are interested in the relationship between per capita
+GDP and life expectancy; i.e. does having more money help you live
+longer?</strong></p>
+<p><strong>7. Which countries have had the largest population growth
+since 1952?</strong></p>
+<p><strong>8. Use your results from the question above to plot
+population growth for the top five countries since 1952.</strong></p>
+<p><strong>9. How does per capita GDP growth compare between these same
+five countries?</strong></p>
+<p><strong>10. Make one plot of your choice that uses
+faceting!</strong></p>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
