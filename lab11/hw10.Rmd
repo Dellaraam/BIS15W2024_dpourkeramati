@@ -92,24 +92,32 @@ deserts %>%
 
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
 ```{r}
-
+deserts %>%
+  count(species, sort=T)
 ```
 
 8. What is the relationship between `weight` and `hindfoot` length? Consider whether or not over plotting is an issue.
 ```{r}
 d <- deserts %>% 
-  ggplot(aes(x = hindfoot_length, y = weight))+
-  geom_point(na.rm=T)+
-  scale_y_log10()
+  ggplot(aes(x = weight, y = hindfoot_length))+
+  geom_jitter(na.rm=T, size=0.25)
 d
 ```
 
 
 9. Which two species have, on average, the highest weight? Once you have identified them, make a new column that is a ratio of `weight` to `hindfoot_length`. Make a plot that shows the range of this new ratio and fill by sex.
+```{r}
+#deserts %>%
+  #mutate() %>%
+  #group_by(sex) %>%
+```
 
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
 ```{r}
-
+deserts %>%
+  ggplot(aes(x=species, fill=plot_type))+
+  geom_bar()+
+  coord_flip()
 ```
 
 ## Push your final code to GitHub!
