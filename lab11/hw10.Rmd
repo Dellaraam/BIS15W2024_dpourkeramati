@@ -80,19 +80,22 @@ deserts %>%
 deserts %>% 
   filter(weight!="NA") %>%
   ggplot(aes(x = species, y = weight)) +
-  geom_boxplot()
+  geom_boxplot()+
+  coord_flip()
 ```
 
 6. Add another layer to your answer from #5 using `geom_point` to get an idea of how many measurements were taken for each species.
 ```{r}
 deserts %>%
   ggplot(aes(x=species, y=weight))+
-  geom_point(na.rm=T)
+  geom_point(na.rm=T)+
+  coord_flip()
 ```
 
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
 ```{r}
 deserts %>%
+  group_by(year) %>%
   count(species, sort=T)
 ```
 
@@ -107,9 +110,12 @@ d
 
 9. Which two species have, on average, the highest weight? Once you have identified them, make a new column that is a ratio of `weight` to `hindfoot_length`. Make a plot that shows the range of this new ratio and fill by sex.
 ```{r}
-#deserts %>%
-  #mutate() %>%
-  #group_by(sex) %>%
+deserts %>%
+  filter(weight!="NA" & hindfoot_length!="NA" & sex!="NA") %>%
+  mutate(ratio = weight/hindfoot_length) %>%
+  ggplot(aes(x=species, y=ratio, fill=sex))+
+  geom_boxplot()+
+  coord_flip()
 ```
 
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
