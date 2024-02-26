@@ -116,7 +116,12 @@ life_history %>%
 ```
 
 ```{r}
-
+life_history %>% 
+  filter(order!="Cetacea") %>% 
+  ggplot(aes(x=order, y=mass))+
+  geom_boxplot(na.rm=T)+
+  coord_flip()+
+  scale_y_log10()
 ```
 
 ## Aesthetics: Labels
@@ -147,7 +152,7 @@ elephants %>%
 ```
 
 We can improve the plot further by adjusting the size and face of the text. We do this using `theme()`. The `rel()` option changes the relative size of the title to keep things consistent. Adding `hjust` allows control of title position.
-```{r}
+```{r}                               
 elephants %>% 
   ggplot(aes(x=age, y=height)) + 
   geom_point() + 

@@ -116,27 +116,35 @@ For this practice, let's use the [palmerpenguins](https://allisonhorst.github.io
 
 1. Make a bar plot that shows counts of individuals by island. Fill by species, and try both a stacked bar plot and `position="dodge"`.
 ```{r}
-
+penguins %>% 
+  ggplot(aes(x = island, fill = species)) + 
+  geom_bar(position="dodge") +
+  labs(title = "Counts of Individuals by Island",
+       x = "Island",
+       fill = "Species")
 ```
 
 ```{r}
-penguins %>%
-  ggplot(aes(x = island, y=species))+
-  geom_bar(position = "dodge")+ 
-  labs()
+penguins %>% 
+  ggplot(aes(x = island, fill = species)) + 
+  geom_bar() +
+  labs(title = "Counts of Individuals by Island",
+       x = "Island",
+       fill = "Species")
+
 ```
 
 2. Make another bar plot that shows the number of individuals by sex on each island?
 ```{r}
 penguins %>%
-  filter(sex!="NA")
-  ggplot(aes(x = island, y=sex))+
+  filter(sex!="NA") %>%
+  ggplot(aes(x = island, fill=sex))+
   geom_bar()+ 
   labs(title="individuals",x="Island", fill="Species")
 ```
 ```{r}
 penguins %>%
-  ggplot(aes(x = island, y=species))+
+  ggplot(aes(x = island, fill=species))+
   geom_bar(position = "dodge")+ 
   labs(title="individuals",x="island", fill="Species")
 ```

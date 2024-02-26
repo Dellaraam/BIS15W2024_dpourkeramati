@@ -88,7 +88,8 @@ relig_income
 
 3. Use `pivot_longer()` to make the data tidy.  
 ```{r}
-relig_income <- pivot_longer()
+relig_income %>%
+  pivot_longer(-religion, names_to="income", values_to="people")
 ```
 
 ## Example 2: some column names are data
@@ -148,8 +149,9 @@ plant_data
 ```{r}
 plant_data %>%
   pivot_longer(-c(genotype,water_sched_prog,greenhouse), 
-               names_to=c("water_sched_prog","greenhouse"),
-               values_to="mutant")
+               names_to="day",
+               values_to="growth",
+               values_drop_na = T)
 ```
 
 ## Example 3: more than one variable in a column name
@@ -163,7 +165,7 @@ qpcr_untidy
 ```{r}
 qpcr_untidy %>% 
   pivot_longer(
-    exp1_rep1:exp3_rep3,
+    -gene,
     names_to= c("experiment", "replicate"),
     names_sep="_",
     values_to="mRNA_expression"

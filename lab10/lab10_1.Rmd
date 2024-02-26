@@ -83,9 +83,6 @@ names(iris)
 
 ## Scatterplots and barplots
 Now that we have a general idea of the syntax, let's start by working with two common plots: 1) scatter plots and 2) bar plots.
-```{r}
-
-```
 
 ## Data
 **Database of vertebrate home range sizes.**  
@@ -137,6 +134,12 @@ ggplot(data=homerange, mapping=aes(x=log10.mass, y=log10.hra))+
 ```{r}
 glimpse(homerange)
 ```
+```{r}
+homerange %>%
+  ggplot(aes(x=log10.hra, y=log10.preymass))+
+  geom_point(na.rm=T)+
+  geom_smooth(method=lm, se=F, na.rm=F)
+```
 
 ### Bar Plot: `geom_bar()`
 The simplest type of bar plot counts the number of observations in a categorical variable. In this case, we want to know how many observations are present in the variable `trophic.guild`. Notice that we do not specify a y-axis because it is count by default.  
@@ -162,7 +165,6 @@ Unlike `geom_bar()`, `geom_col()` allows us to specify an x-axis and a y-axis.
 ```{r}
 homerange %>% 
   filter(family=="salmonidae") %>%
-  select(common.name, log10.mass) %>% 
   ggplot(aes(y=common.name, x=log10.mass))+ #notice the switch in x and y
   geom_col()
 ```
@@ -187,9 +189,8 @@ mammals
 2. Are there more herbivores or carnivores in mammals? Make a bar plot that shows their relative numbers.
 ```{r}
 mammals %>%
-  count(trophic.guild) %>%
-  ggplot(aes(x=trophic.guild, y=n))+
-  geom_col()
+  ggplot(aes(x=trophic.guild))+
+  geom_bar()
 ```
 
 3. Make a bar plot that shows the masses of the top 10 smallest mammals.

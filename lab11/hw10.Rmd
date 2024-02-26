@@ -95,10 +95,10 @@ deserts %>%
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
 ```{r}
 deserts %>%
-  filter(species=="alibigula") %>%
+  filter(species=="albigula") %>%
   group_by(year) %>%
-  summaerize(samples=n()) %>%
-  ggplot(aes(x=as.factor(year), y=samples)+
+  summarize(samples=n()) %>%
+  ggplot(aes(x=as.factor(year), y=samples))+
   geom_col()
 ```
 
