@@ -31,40 +31,155 @@ library("naniar")
 ## Load the data
 Run the following code chunk to import the data.
 ```{r message=FALSE, warning=FALSE}
-#sharks <- read_csv("data/SharkIncidents_1950_2022_220302.csv") %>% clean_names()
+sharks <- read_csv("data/SharkIncidents_1950_2022_220302.csv") %>% clean_names()
 ```
 
 ## Questions
 1. (1 point) Start by doing some data exploration using your preferred function(s). What is the structure of the data? Where are the missing values and how are they represented?  
+```{r}
+glimpse(sharks)
+```
+
 
 2. (1 point) Notice that there are some incidents identified as "NOT COUNTED". These should be removed from the data because they were either not sharks, unverified, or were provoked. It's OK to replace the `sharks` object.
 
+```{r}
+sharks2 <- read_csv("data/SharkIncidents_1950_2022_220302.csv", na=c("NA", "NOT COUNTED", "", "Unkown", "early am", "afternoon", "Not Used")) %>% clean_names()
+```
+```{r}
+glimpse(sharks2)
+```
+
+
 3. (3 points) Are there any "hotspots" for shark incidents in California? Make a plot that shows the total number of incidents per county. Which county has the highest number of incidents?
+```{r}
+sharks2$incident_num <- as.factor(sharks2$incident_num)
+```
+
+```{r}
+hotspots <- sharks2 %>%
+  ggplot(aes(x=county))+
+  geom_bar()+
+  coord_flip()
+hotspots
+  
+```
+San Diego 
 
 4. (3 points) Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?  
+```{r}
+sharks2$month <- as.factor(sharks2$month)
+```
 
-5. (3 points) How do the number and types of injuries compare by county? Make a table (not a plot) that shows the number of injury types by county. Which county has the highest number of fatalities?  
+```{r}
+sharks2 %>%
+  filter(incident_num!="NA") %>%
+  ggplot(aes(x=month))+
+  geom_bar()+
+  coord_flip()
+```
+Octorber 
+
+5. (3 points) How do the number and types of injuries compare by county? Make a table (not a plot) that shows the number of injury types by county. Which county has the highest number of fatalities? 
+
+```{r}
+fatality <- sharks2 %>%
+  filter(incident_num!="NA") %>%
+  group_by(county) %>%
+  count(injury)
+fatality
+```
+
+```{r}
+sharks2 %>%
+  filter(incident_num!="NA") %>%
+  group_by(county) %>%
+  count(injury) %>%
+  summarise(total = sum(n)) %>%
+  arrange(desc(total))
+```
+San Diego
 
 6. (2 points) In the data, `mode` refers to a type of activity. Which activity is associated with the highest number of incidents?
+```{r}
+sharks2 %>%
+  filter(incident_num!="NA") %>%
+  ggplot(aes(x=mode))+
+  geom_bar()+
+  coord_flip()
+```
+Surfing 
 
 7. (4 points) Use faceting to make a plot that compares the number and types of injuries by activity. (hint: the x axes should be the type of injury) 
+```{r}
+sharks2 %>%
+  filter(incident_num!="NA") %>%
+  ggplot(aes(x=injury))+
+  geom_bar()+
+  facet_wrap(~mode)
+```
 
 8. (1 point) Which shark species is involved in the highest number of incidents?  
+```{r}
+sharks2 %>%
+  filter(incident_num!="NA") %>%
+  ggplot(aes(x=species))+
+  geom_bar()
+```
+white 
 
 9. (3 points) Are all incidents involving Great White's fatal? Make a plot that shows the number and types of injuries for Great White's only.  
+```{r}
+sharks2 %>%
+  filter(incident_num!="NA") %>%
+  filter(species=="White") %>%
+  ggplot(aes(x=injury))+
+  geom_bar()
+```
 
 ## Background
 Let's learn a little bit more about Great White sharks by looking at a small dataset that tracked 20 Great White's in the Fallaron Islands. The [data](https://link.springer.com/article/10.1007/s00227-007-0739-4) are from: Weng et al. (2007) Migration and habitat of white sharks (_Carcharodon carcharias_) in the eastern Pacific Ocean.
 
 ## Load the data
 ```{r message=FALSE, warning=FALSE}
-#white_sharks <- read_csv("data/White sharks tracked from Southeast Farallon Island, CA, USA, 1999 2004.csv", na = c("?", "n/a")) %>% clean_names()
+white_sharks <- read_csv("data/White sharks tracked from Southeast Farallon Island, CA, USA, 1999 2004.csv", na = c("?", "n/a")) %>% clean_names()
 ```
 
 10. (1 point) Start by doing some data exploration using your preferred function(s). What is the structure of the data? Where are the missing values and how are they represented?
+```{r}
+glimpse(white_sharks)
+```
+
 
 11. (3 points) How do male and female sharks compare in terms of total length? Are males or females larger on average? Do a quick search online to verify your findings. (hint: this is a table, not a plot).  
+```{r}
+white <- white_sharks %>%
+  separate(shark, into=c("num", "sex"), sep="-")
+```
+```{r}
+white %>%
+  filter(sex!="U") %>%
+  group_by(sex) %>%
+  summarize(mean_length=mean(total_length_cm))
+```
+Yes, females tend to be larger than males
 
 12. (3 points) Make a plot that compares the range of total length by sex.
+```{r}
+white %>%
+  filter(sex!="U") %>%
+  ggplot(aes(x=sex, y=total_length_cm))+
+  geom_boxplot()
+```
 
 13. (2 points) Using the `sharks` or the `white_sharks` data, what is one question that you are interested in exploring? Write the question and answer it using a plot or table.  
+
+What is the average longitude that they are tracking by sex
+```{r}
+white %>%
+  filter(longitude!="NA") %>%
+  filter(sex!="U") %>%
+  ggplot(aes(x=sex, y=longitude))+
+  geom_boxplot(na.rm=T)
+```
+
