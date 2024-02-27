@@ -114,7 +114,7 @@ gapminder %>%
 ```{r}
 gapminder %>%
   filter(country %in% c("China", "India", "United States", "Indonesia", "Brazil")) %>%
-  group_by(country,year) %>%
+  group_by(country) %>%
   ggplot(aes(x=year, y=pop, color=country))+
   geom_point()
   
@@ -124,7 +124,7 @@ gapminder %>%
 ```{r}
 gapminder %>%
   filter(country %in% c("China", "India", "United States", "Indonesia", "Brazil")) %>%
-  group_by(country,year) %>%
+  group_by(country) %>%
   ggplot(aes(x=year, y=gdpPercap, color=country))+
   geom_point()
 ```
