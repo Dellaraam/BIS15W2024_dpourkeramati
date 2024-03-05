@@ -110,6 +110,7 @@ ggmap(wolvesmap)+
 ```
 
 
+
 10. Use the map from #9 above, but add some aesthetics. Try to `fill` and `color` by population. 
 ```{r}
 ggmap(wolvesmap)+
