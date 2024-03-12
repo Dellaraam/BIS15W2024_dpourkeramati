@@ -26,22 +26,28 @@ library(dplyr)
 
 1.
 ```{r}
-blood_count <- read_csv("data/blood_count.csv")
+#this code chunk reads in a dataset and was originally mispelled and wasn't cleaned 
+blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names()
+```
+```{r}
+getwd()
 ```
 
 2. 
 ```{r}
-glmpse(blood_count)
-
+glimpse(blood_count)
+#glimpse allows you to get a short summary of your data and was misspelled 
 ```
 
 3. 
 ```{r}
 blood_count %>% 
   group_by(gender) %>% 
-  summarize(min=min(red_blood_cells)
-            mean=maen(red_blood_cells),
-            max=max(red_blood_cells)
+  summarize(min=min(red_blood_cells),
+            mean=mean(red_blood_cells),
+            max=max(red_blood_cells))
+#this gets the mean of red blood cell counts and the maximum red blood cell count. 
+#It was missing some commas and mean was misspelled
 ```
 
 
@@ -49,66 +55,80 @@ blood_count %>%
 ```{r}
 options(scipen = 999, digits = 2)
 
-blood_count %>% 
-  filter(Gender = "male") %>%
-  select[3:9] %>%
+blood <- blood_count %>% 
+  filter(gender == "Male") %>%
+  select(3:9) %>%
   colMeans(na.rm = TRUE)
-
+#this gets a means of the columns for males 
+#select should have been () instead of [] and M in male should have been capatalised as well as == instead of =
 ```
 
 5. 
 ```{r}
-bloood_count %>% 
-  filter(Gender = "Female") />%
-  select[3:9] %>%
+blood_count %>% 
+  filter(gender == "Female") %>%
+  select(3:9) %>%
   colMeans(na.rm = T)
+#mean of the colomns for females 
+# () instead of []
+# = instead of ==
+# %>% instead of />%
+#gender instead of Gender 
+#blood instead of bloood 
 ```
 
 
 6. 
 ```{r}
 
-blood_count %>%
-  pivot_wider(cols = [3:9], names_to = "Test", values_to = "Values") %>%
-  ggplot(aes(x = Gender, y = Values, fill = Gender)) +
-  geom_boxplot() +
-  facet(~ Test, scales = "free") 
-  labs(title = "Boxplot of Blood Count Tests",
-       x = "Test",
-       y = "Values")
+#blood_count %>%
+  #pivot_wider(cols = (3:9), names_from = "test", values_from = "values") %>%
+  #ggplot(aes(x = gender, y = values, fill = gender)) +
+  #geom_boxplot() +
+  #facet_wrap(~ test, scales = "free") 
+  #labs(title = "Boxplot of Blood Count Tests", x = "test",y = "values")
 
 ```
 
 7. 
 ```{r}
 grouped_bc <- blood_count %>%
-  change(Age_Group = case_when(
-    Age >= 20 & Age <= 29 ~ "20s",
-    Age >= 30 & Age <= 39 ~ "30s",
-    Age >= 40 & Age <= 49 ~ "40s",
-    Age >= 50 & Age <= 59 ~ "50s",
-    Age >= 60 & Age <= 70 ~ "60s")) # there were only 4 people in 70s, so I combined it with 60s
-
-head(grouped_bc)
-
+  mutate(age_group = case_when(
+    age >= 20 & age <= 29 ~ "20s",
+    age >= 30 & age <= 39 ~ "30s",
+    age >= 40 & age <= 49 ~ "40s",
+    age >= 50 & age <= 59 ~ "50s",
+    age >= 60 & age <= 70 ~ "60s")) # there were only 4 people in 70s, so I combined it with 60s
+grouped_bc
+#adds age group
+#a not A
+#mutate not change
 ```
 
 8. 
 ```{r}
-blood_count %>%
-  pivot_longer(cols = 3:9, names_to = "Test", values_to = "Values") %>%
-  ggplot(ase(x = Age_Group, y = values, fill = Age_Group)) +
+grouped_bc %>%
+  pivot_longer(cols = (3:9), names_to = "test", values_to = "values") %>%
+  ggplot(aes(x = age_group, y = values, fill = age_group)) +
   geom_boxplot() +
-  facet_wrap( Test, scales = "free") +  # Facet by the "Test" variable
+  facet_wrap(~ test, scales = "free") +  # Facet by the "Test" variable
   labs(title = "Boxplot of Blood Count Tests by Age Group",
        x = "Age Group",
        y = "Values")
 
+#plots for the distributions of the cols
+#aes not ase
+#grouped_bc not blood_count
+
 ```
 9. What are two drawbacks and two benefits of AI?
 
+AI could sifle learning if overused and could exaserbate plagarism at the same time it could make our
+jobs alot easier by finding our mistakes and thinking of solutions before we can
+
 10. Do you think you will use AI for coding in the future? Why or why not?
 
+I might if I feel like i need to save time by having it do tetidous work for me 
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
