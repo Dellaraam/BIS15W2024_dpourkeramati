@@ -81,13 +81,19 @@ blood_count %>%
 6. 
 ```{r}
 
-#blood_count %>%
-  #pivot_wider(cols = (3:9), names_from = "test", values_from = "values") %>%
-  #ggplot(aes(x = gender, y = values, fill = gender)) +
-  #geom_boxplot() +
-  #facet_wrap(~ test, scales = "free") 
-  #labs(title = "Boxplot of Blood Count Tests", x = "test",y = "values")
-
+blood_count %>%
+  pivot_longer(cols = (3:9), names_to = "test", values_to = "values") %>%
+  ggplot(aes(x = gender, y = values, fill = gender)) +
+  geom_boxplot() +
+  facet_wrap(~test) 
+  labs(title = "Boxplot of Blood Count Tests",
+       x = "test",
+       y = "values")
+#pivot_longer not pivot_wider
+#() not []
+# needs facet_wrap 
+#all lowercase columns 
+#finds averges of the columns using boxplot 
 ```
 
 7. 
